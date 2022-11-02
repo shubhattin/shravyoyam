@@ -1,0 +1,1 @@
+pyinstaller --noconfirm --onedir --window --icon i.ico shr.py
