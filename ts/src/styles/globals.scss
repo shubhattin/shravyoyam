@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 body {
-    font-family: "Nirmala UI";
+  font-family: 'Nirmala UI';
 }
 
 button {
-    @apply cursor-default sm:cursor-pointer;
+  @apply cursor-default sm:cursor-pointer;
 }
 
 video {
-    width: 100%
+  width: 100%;
 }
 
 input {
-    outline: none;
+  outline: none;
 }
