@@ -40,7 +40,7 @@ for x in sh.argv:
             sh.delete_folder("build_apk")
         sh.makedir("build_apk")
         sh.download_file(
-            "https://github.com/shubhamudi/shravyoyam/releases/download/bin/shravyoyam.apk",
+            "https://github.com/shubhattin/shravyoyam/releases/download/bin/shravyoyam.apk",
             "build_apk/shravyoyam.apk",
         )
     elif x == "build_apk":
@@ -71,7 +71,7 @@ for x in sh.argv:
     elif x == "upload_apk":
         sh.upload_release_file(
             "build_apk\\shravyoyam.apk",
-            "ofsfobnelip/shravyoyam",
+            "shubhattin/shravyoyam",
             "bin",
             sh.from_base64(os.getenv("GIT_KEY")),
         )
