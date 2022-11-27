@@ -3,7 +3,6 @@
   import { writable } from 'svelte/store';
   import { onMount } from 'svelte';
   import loadData from './tools/LoadData';
-  // import TimeControl from './components/TimeControl.svelte';
   import {
     LOC_ID,
     lasan,
@@ -14,7 +13,6 @@
     blinking
   } from './store';
   import Blink from './components/Blink.svelte';
-  import Nirdharanam from './components/Nirdharanam.svelte';
 
   const prachalan = writable(false);
   const chalan = writable(false);
