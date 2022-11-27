@@ -3,7 +3,7 @@
   import { writable } from 'svelte/store';
   import { onMount } from 'svelte';
   import loadData from './tools/LoadData';
-  import TimeControl from './components/TimeControl.svelte';
+  // import TimeControl from './components/TimeControl.svelte';
   import {
     LOC_ID,
     lasan,
@@ -138,7 +138,9 @@
   </div>
   {#if $lasan}
     <div class={$media_show ? '' : 'hidden'}>
-      <TimeControl elm={media_ref} />
+      {#await import('./components/TimeControl.svelte') then TimeControl}
+        <TimeControl.default elm={media_ref} />
+      {/await}
       {#if $lasan && $lasanSanchit[1][0] !== ''}
         {@const dt = $lasanSanchit[1]}
         {@const lc = `${localStorage.getItem(LOC_ID)}/${dt[0]}`}
@@ -153,6 +155,8 @@
   {/if}
   <Blink />
   {#if $nirdharanam}
-    <Nirdharanam />
+    {#await import('./components/Nirdharanam.svelte') then Nirdharanam}
+      <Nirdharanam.default />
+    {/await}
   {/if}
 </div>
