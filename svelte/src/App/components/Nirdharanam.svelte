@@ -5,6 +5,7 @@
   import loadData from '../tools/LoadData';
 
   let loc = '';
+  let displayLoc = localStorage.getItem(LOC_ID);
   let data_view = false;
   let inputRef: HTMLInputElement = null!;
 
@@ -13,6 +14,7 @@
     let v = await loadData(loc);
     if (JSON.stringify(v) !== '{}') {
       localStorage.setItem(LOC_ID, loc);
+      displayLoc = loc;
       dattAMsh.set(v);
       data_view = true;
       loc = '';
@@ -54,7 +56,7 @@
   </div>
   {#if data_view}
     <div class="text-white text-sm overflow-scroll max-w-xs max-h-32">
-      <div>{localStorage.getItem(LOC_ID)}</div>
+      <div>{displayLoc}</div>
       <br />
       <div>{JSON.stringify($dattAMsh)}</div>
     </div>
