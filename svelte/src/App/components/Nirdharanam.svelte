@@ -34,6 +34,7 @@
   <div>
     <input
       type="text"
+      autocapitalize="off"
       bind:this={inputRef}
       bind:value={loc}
       class="w-52 p-1 ml-0 text-white bg-black font-medium m-1 border-2 border-white rounded-lg"

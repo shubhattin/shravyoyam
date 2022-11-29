@@ -94,6 +94,7 @@
     <form on:submit|preventDefault={() => set_media_file($value)}>
       <input
         on:input={check}
+        autocapitalize="off"
         bind:value={$value}
         type="text"
         class="w-52 ml-0 text-teal-500 bg-black block font-semibold m-1 text-xl border-2 border-gray-900 rounded-md"
