@@ -10,7 +10,8 @@
     lasanSanchit,
     dattAMsh,
     media_show,
-    blinking
+    blinking,
+    currentTime
   } from './store';
   import Blink from './components/Blink.svelte';
 
@@ -22,8 +23,6 @@
   let collect: number[] = [];
   let key_num = 0;
   let body: HTMLDivElement = null!;
-  let media_ref: HTMLAudioElement | HTMLVideoElement = null!;
-
   const todani = (n: number) => {
     collect.push(n);
     if ($prachalan && n === 1 && collect.length == 1) set_media_file($value);
@@ -92,12 +91,7 @@
   )}
 >
   <div class={$prachalan ? '' : 'hidden'}>
-    <form
-      on:submit={(e) => {
-        e.preventDefault();
-        set_media_file($value);
-      }}
-    >
+    <form on:submit|preventDefault={() => set_media_file($value)}>
       <input
         on:input={check}
         bind:value={$value}
@@ -137,16 +131,16 @@
   {#if $lasan}
     <div class={$media_show ? '' : 'hidden'}>
       {#await import('./components/TimeControl.svelte') then TimeControl}
-        <TimeControl.default elm={media_ref} />
+        <TimeControl.default />
       {/await}
       {#if $lasan && $lasanSanchit[1][0] !== ''}
         {@const dt = $lasanSanchit[1]}
         {@const lc = `${localStorage.getItem(LOC_ID)}/${dt[0]}`}
         {#if dt[2] === 0}
-          <audio bind:this={media_ref} controls loop autoPlay src={lc} />
+          <audio bind:currentTime={$currentTime} controls loop autoPlay src={lc} />
         {:else if dt[2] === 1}
           <!-- svelte-ignore a11y-media-has-caption -->
-          <video bind:this={media_ref} controls loop autoPlay src={lc} />;
+          <video bind:currentTime={$currentTime} controls loop autoPlay src={lc} />;
         {/if}
       {/if}
     </div>

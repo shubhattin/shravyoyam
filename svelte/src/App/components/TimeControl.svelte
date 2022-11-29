@@ -1,12 +1,12 @@
 <script lang="ts">
-  export let elm: HTMLAudioElement | HTMLVideoElement;
+  import { currentTime } from '../store';
 
   let tm = [0, 0, 0]; // seconds, minutes, hours
   let tm_show = false;
 
   const hide_show = () => (tm_show = !tm_show);
   const load_current = () => {
-    let dur = elm.currentTime;
+    let dur = $currentTime;
     let sec = dur % 60;
     dur -= sec;
     dur /= 60;
@@ -21,14 +21,14 @@
     let t = tm[0];
     t += tm[1] * 60;
     t += tm[2] * 3600;
-    elm.currentTime = t;
+    $currentTime = t;
   };
   const lower_time = () => {
-    elm.currentTime -= 10;
+    $currentTime -= 10;
     load_current();
   };
   const higher_time = () => {
-    elm.currentTime += 10;
+    $currentTime += 10;
     load_current();
   };
 </script>
