@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentTime } from '../store';
+  import { currentTime } from '@store/index';
 
   let tm = [0, 0, 0]; // seconds, minutes, hours
   let tm_show = false;

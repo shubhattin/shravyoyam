@@ -1,8 +1,8 @@
 <script lang="ts">
   import IoClose from 'svelte-icons-pack/io/IoClose';
   import Icon from 'svelte-icons-pack/Icon.svelte';
-  import { dattAMsh, LOC_ID, nirdharanam } from '../store';
-  import loadData from '../tools/LoadData';
+  import { dattAMsh, LOC_ID, nirdharanam } from '@store/index';
+  import loadData from '@tools/LoadData';
 
   let loc = '';
   let displayLoc = localStorage.getItem(LOC_ID);

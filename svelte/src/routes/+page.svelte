@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { clsx } from './tools/clsx';
-  import { writable } from 'svelte/store';
+  import { clsx } from '@tools/clsx';
   import { onMount } from 'svelte';
-  import loadData from './tools/LoadData';
+  import loadData from '@tools/LoadData';
   import {
     LOC_ID,
     lasan,
@@ -12,26 +11,26 @@
     media_show,
     blinking,
     currentTime
-  } from './store';
-  import Blink from './components/Blink.svelte';
+  } from '@store/index';
+  import Blink from '@components/Blink.svelte';
 
-  const prachalan = writable(false);
-  const chalan = writable(false);
-  const value = writable('');
-  const selectValue = writable('');
+  let prachalan = false;
+  let chalan = false;
+  let value = '';
+  let selectValue = '';
 
   let collect: number[] = [];
   let key_num = 0;
   let body: HTMLDivElement = null!;
   const todani = (n: number) => {
     collect.push(n);
-    if ($prachalan && n === 1 && collect.length == 1) set_media_file($value);
+    if (prachalan && n === 1 && collect.length == 1) set_media_file(value);
     let jn = collect.join('');
-    if ($chalan) {
-      if (jn === '12') prachalan.set(true);
+    if (chalan) {
+      if (jn === '12') prachalan = true;
       else if (jn == '21') {
-        chalan.set(false); //active state of app
-        prachalan.set(false); //active state of input field
+        chalan = false; //active state of app
+        prachalan = false; //active state of input field
         lasan.set(false); // state of current playback
       }
       if (jn.length === 2) {
@@ -43,7 +42,7 @@
         body.style.backgroundColor = 'purple';
         setTimeout(() => {
           body.style.backgroundColor = '';
-          chalan.set(true);
+          chalan = true;
         }, 500);
       } else if (jn == '22212') nirdharanam.set(true);
       if (collect.length === 5) {
@@ -57,20 +56,21 @@
       key_num++;
       setTimeout(() => {
         if (key_num == 0) return;
-        else if (key_num == 1) value.set('');
+        else if (key_num == 1) value = '';
         key_num--;
       }, 3000);
-    } else value.set('');
+    } else value = '';
   };
-  const set_media_file = (vl: string) => {
-    if (vl != '' && vl in $dattAMsh) {
+  const set_media_file = (val: string) => {
+    if (val != '' && val in $dattAMsh) {
       lasan.set(true);
-      lasanSanchit.set([vl, $dattAMsh[vl]]);
-      prachalan.set(false);
+      lasanSanchit.set([val, $dattAMsh[val]]);
+      selectValue = val;
+      prachalan = false;
       media_show.set(false);
     }
-    value.set('');
-    if (vl !== '') collect = [];
+    value = '';
+    if (val !== '') collect = [];
   };
 
   onMount(() => {
@@ -83,25 +83,28 @@
   $: !$lasan && lasanSanchit.set(['', ['', '', 0]]); // removing current playing if lasan goes off
 </script>
 
+<svelte:head>
+  <title>లస్యశ్రవ్యౌ</title>
+</svelte:head>
 <div
   bind:this={body}
   class={clsx(
-    'p-2 w-full h-full select-none fixed top-0',
-    JSON.stringify($dattAMsh) !== '{}' ? 'bg-black' : 'bg-stone-900'
+    'p-2 w-full h-full select-none fixed top-0 transition',
+    JSON.stringify($dattAMsh) !== '{}' ? 'bg-black' : 'bg-neutral-900'
   )}
 >
-  <div class={$prachalan ? '' : 'hidden'}>
-    <form on:submit|preventDefault={() => set_media_file($value)}>
+  <div class={prachalan ? undefined : 'hidden'}>
+    <form on:submit|preventDefault={() => set_media_file(value)}>
       <input
         on:input={check}
         autocapitalize="off"
-        bind:value={$value}
+        bind:value
         type="text"
         class="w-52 ml-0 text-teal-500 bg-black block font-semibold m-1 text-xl border-2 border-gray-900 rounded-md"
       />
     </form>
     <select
-      bind:value={$selectValue}
+      bind:value={selectValue}
       on:change={(e) => set_media_file(e.currentTarget.value)}
       class="w-5 h-4 mt-2 text-white bg-black outline-none border-2 rounded-sm border-gray-900"
     >
@@ -131,7 +134,7 @@
   </div>
   {#if $lasan}
     <div class={$media_show ? '' : 'hidden'}>
-      {#await import('./components/TimeControl.svelte') then TimeControl}
+      {#await import('@components/TimeControl.svelte') then TimeControl}
         <TimeControl.default />
       {/await}
       {#if $lasan && $lasanSanchit[1][0] !== ''}
@@ -148,7 +151,7 @@
   {/if}
   <Blink />
   {#if $nirdharanam}
-    {#await import('./components/Nirdharanam.svelte') then Nirdharanam}
+    {#await import('@components/Nirdharanam.svelte') then Nirdharanam}
       <Nirdharanam.default />
     {/await}
   {/if}

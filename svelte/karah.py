@@ -35,14 +35,6 @@ for x in sh.argv:
             )
         )
         sh.cmd("pnpm build", direct=False)
-        dir = os.listdir("dist")
-        for x in dir:
-            tp = x.split(".")[-1]
-            if tp == "html":
-                f = sh.read(f"dist/{x}")
-                f = f.replace('href="/', 'href="./')
-                f = f.replace('src="/', 'src="./')
-                sh.write(f"dist/{x}", f)
     elif x == "avahar":
         if os.path.isdir("build_apk"):
             sh.delete_folder("build_apk")
@@ -56,7 +48,7 @@ for x in sh.argv:
         sh.extract(pth, pth[:-4])
         sh.delete_file(pth)
         sh.delete_folder(pth[:-4] + r"\assets\www")
-        sh.copy_folder("dist/", pth[:-4] + r"\assets\www")
+        sh.copy_folder("build", pth[:-4] + r"\assets\www")
         sh.delete_folder(pth[:-4] + r"\META-INF")
         sh.cmd(
             f'"{sh.tool}\\7zip\\7za.exe" a -tzip -mx9 -r "{pth[:-4]}.zip" "{pth[:-4]}\\*" -y',

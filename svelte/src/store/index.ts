@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { datt_type } from './tools/LoadData';
+import type { datt_type } from '@tools/LoadData';
 
 export const blinking = writable(false);
 export const nirdharanam = writable(false);

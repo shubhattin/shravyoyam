@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { blinking } from '../store';
+  import { blinking } from '@store/index';
   $: {
     if ($blinking) {
       setTimeout(() => blinking.set(false), 400);

@@ -1,8 +1,10 @@
 const config = {
-  content: ['./src/**/*.{html,svelte}', './index.html'],
+  content: ['./src/**/*.{html,svelte}'],
+
   theme: {
     extend: {}
   },
+
   plugins: []
 };
 
