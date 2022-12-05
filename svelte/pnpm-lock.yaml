@@ -18,6 +18,9 @@ specifiers:
   typescript: ^4.9.3
   vite: ^3.2.4
 
+dependencies:
+  svelte-icons-pack: 2.0.0
+
 devDependencies:
   '@sveltejs/adapter-static': 1.0.0-next.48
   '@sveltejs/kit': 1.0.0-next.571_svelte@3.53.1+vite@3.2.4
@@ -29,7 +32,6 @@ devDependencies:
   sass: 1.56.1
   svelte: 3.53.1
   svelte-check: 2.10.0_lae5lhfxexyizvi5yxbuu4veoq
-  svelte-icons-pack: 2.0.0
   svelte-preprocess: 4.10.7_lucnjuyigjdgzzplgxx36nk3ki
   tailwindcss: 3.2.4_postcss@8.4.19
   tslib: 2.4.1
@@ -1136,7 +1138,7 @@ packages:
 
   /svelte-icons-pack/2.0.0:
     resolution: {integrity: sha512-B0EjVQrdURQCY/n//vBmJA/cbrT6ngv6Ja4FXVXUlZjcSKhoXpIgmcQQ0lPH5PpCcJNKbDQYyxPnUW1KTrkWJA==}
-    dev: true
+    dev: false
 
   /svelte-preprocess/4.10.7_lucnjuyigjdgzzplgxx36nk3ki:
     resolution: {integrity: sha512-sNPBnqYD6FnmdBrUmBCaqS00RyCsCpj2BG58A1JBswNF7b0OKviwxqVrOL/CKyJrLSClrSeqQv5BXNg2RUbPOw==}

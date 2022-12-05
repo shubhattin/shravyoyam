@@ -54,7 +54,7 @@
 <div class={`mb-2.5 mt-5 ${tm_show ? '' : 'hidden'}`}>
   <button
     on:click={lower_time}
-    class="text-2xl text-white font-bold border-2 rounded-lg p-[3px] cursor-pointer active:text-red-300 active:border-red-400"
+    class="text-2xl text-white font-bold border-2 rounded-lg p-[3px] active:text-red-300 active:border-red-400"
   >
     -
   </button>
@@ -79,7 +79,7 @@
   </span>
   <button
     on:click={higher_time}
-    class="text-2xl text-white font-bold border-2 rounded-lg p-[3px] cursor-pointer active:text-green-300 active:border-green-400"
+    class="text-2xl text-white font-bold border-2 rounded-lg p-[3px] active:text-green-300 active:border-green-400"
   >
     +
   </button>

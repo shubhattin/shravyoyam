@@ -52,7 +52,7 @@
       s
     </button>
     <button on:click={() => nirdharanam.set(false)}>
-      <Icon src={IoClose} className="w-11 h-11 cursor-pointer -ml-2 inline-block fill-red-500" />
+      <Icon src={IoClose} className="w-11 h-11 -ml-2 inline-block fill-red-500" />
     </button>
   </div>
   {#if data_view}
