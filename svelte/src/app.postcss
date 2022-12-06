@@ -3,18 +3,29 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Nirmala UI';
-}
+@layer base {
+  body {
+    font-family: 'Nirmala UI';
+    @apply select-none;
+  }
 
-button {
-  @apply cursor-default sm:cursor-pointer;
-}
+  button {
+    @apply cursor-default sm:cursor-pointer;
+  }
 
-video {
-  @apply w-3/5;
-}
+  video {
+    @apply w-3/5;
+  }
 
-input {
-  outline: none;
+  input {
+    @apply outline-none;
+  }
+  svg {
+    @apply inline-block;
+  }
+}
+@layer utilities {
+  .cursor-button {
+    @apply cursor-default sm:cursor-pointer;
+  }
 }
