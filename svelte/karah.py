@@ -44,22 +44,25 @@ for x in sh.argv:
             "build_apk/shravyoyam.apk",
         )
     elif x == "build_apk":
-        pth = str(sh.parent(__file__))+r"\build_apk\shravyoyam.apk"
+        pth = str(sh.parent(__file__)) + "/build_apk/shravyoyam.apk"
         sh.extract(pth, pth[:-4])
         sh.delete_file(pth)
-        sh.delete_folder(pth[:-4] + r"\assets\www")
-        sh.copy_folder("build", pth[:-4] + r"\assets\www")
-        sh.delete_folder(pth[:-4] + r"\META-INF")
+        sh.delete_folder(pth[:-4] + "/assets/www")
+        sh.copy_folder("build", pth[:-4] + "/assets/www")
+        sh.delete_folder(pth[:-4] + "/META-INF")
+        ZIP_PATH = f"{sh.tool}\\7zip\\7za.exe" if sh.IS_WINDOWS else "7z"
         sh.cmd(
-            f'"{sh.tool}\\7zip\\7za.exe" a -tzip -mx9 -r "{pth[:-4]}.zip" "{pth[:-4]}\\*" -y',
+            f'{ZIP_PATH} a -tzip -mx9 -r "{pth[:-4]}.zip" "{pth[:-4]}/*" -y',
             display=False,
         )
         sh.delete_folder(pth[:-4])
         sh.zipalign_apk(f"{pth[:-4]}.zip", pth)
         sh.delete_file(f"{pth[:-4]}.zip")
         sh.sign_apk(pth, "shubham", getpass("sign key = "))
+        if os.path.isfile(f"{pth}.idsig"):
+            sh.delete_file(f"{pth}.idsig")
     elif x == "test":
-        adb = f"{sh.tool}\\android\\adb.exe"
+        adb = f"{sh.tool}/android/adb.exe" if sh.IS_WINDOWS else "adb"
         sh.cmd(f"{adb} install build_apk/shravyoyam.apk")
         sh.cmd(
             f"{adb} shell pm grant lasa.shravya android.permission.READ_EXTERNAL_STORAGE"
@@ -70,7 +73,7 @@ for x in sh.argv:
         )
     elif x == "upload_apk":
         sh.upload_release_file(
-            "build_apk\\shravyoyam.apk",
+            "build_apk/shravyoyam.apk",
             "shubhattin/shravyoyam",
             "bin",
             get_git_key(),
