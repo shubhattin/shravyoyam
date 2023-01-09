@@ -13,8 +13,7 @@ from subprocess import Popen
 
 class kAryaM:
     def __init__(self):
-        self.__pUrva = WinRegistry().read_entry(
-            "HKCU\\SOFTWARE\\shravyo'yam", "sthAnam").value
+        self.__pUrva = WinRegistry().read_value("HKCU\\SOFTWARE\\shravyo'yam","sthAnam")["data"]
         self.__pUrva = self.__pUrva.split("?")
         self.paristhAnam = self.__pUrva[0]
         self.paristhAnam = self.paristhAnam.replace("\\", "/")

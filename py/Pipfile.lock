@@ -1,0 +1,84 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "ff6d7718020f9e2b600c081972f4e6e48234d56ce4af290c5fbede6e21f3eded"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.11"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "audioplayer": {
+            "hashes": [
+                "sha256:2a90da014d3519e7c2319c4ee4969cb4d30741b34ef0877b3314d5b7143a52d3",
+                "sha256:94b18dcd7a8067546f8483fc7e69a58d1e603588ab1752c743ff6e0ff8cb2be6"
+            ],
+            "index": "pypi",
+            "version": "==0.6"
+        },
+        "keyboard": {
+            "hashes": [
+                "sha256:63ed83305955939ca5c9a73755e5cc43e8242263f5ad5fd3bb7e0b032f3d308b",
+                "sha256:8e9c2422f1217e0bd84489b9ecd361027cc78415828f4fe4f88dd4acd587947b"
+            ],
+            "index": "pypi",
+            "version": "==0.13.5"
+        },
+        "psutil": {
+            "hashes": [
+                "sha256:149555f59a69b33f056ba1c4eb22bb7bf24332ce631c44a319cec09f876aaeff",
+                "sha256:16653106f3b59386ffe10e0bad3bb6299e169d5327d3f187614b1cb8f24cf2e1",
+                "sha256:3d7f9739eb435d4b1338944abe23f49584bde5395f27487d2ee25ad9a8774a62",
+                "sha256:3ff89f9b835100a825b14c2808a106b6fdcc4b15483141482a12c725e7f78549",
+                "sha256:54c0d3d8e0078b7666984e11b12b88af2db11d11249a8ac8920dd5ef68a66e08",
+                "sha256:54d5b184728298f2ca8567bf83c422b706200bcbbfafdc06718264f9393cfeb7",
+                "sha256:6001c809253a29599bc0dfd5179d9f8a5779f9dffea1da0f13c53ee568115e1e",
+                "sha256:68908971daf802203f3d37e78d3f8831b6d1014864d7a85937941bb35f09aefe",
+                "sha256:6b92c532979bafc2df23ddc785ed116fced1f492ad90a6830cf24f4d1ea27d24",
+                "sha256:852dd5d9f8a47169fe62fd4a971aa07859476c2ba22c2254d4a1baa4e10b95ad",
+                "sha256:9120cd39dca5c5e1c54b59a41d205023d436799b1c8c4d3ff71af18535728e94",
+                "sha256:c1ca331af862803a42677c120aff8a814a804e09832f166f226bfd22b56feee8",
+                "sha256:efeae04f9516907be44904cc7ce08defb6b665128992a56957abc9b61dca94b7",
+                "sha256:fd8522436a6ada7b4aad6638662966de0d61d241cb821239b2ae7013d41a43d4"
+            ],
+            "index": "pypi",
+            "version": "==5.9.4"
+        },
+        "pywin32": {
+            "hashes": [
+                "sha256:109f98980bfb27e78f4df8a51a8198e10b0f347257d1e265bb1a32993d0c973d",
+                "sha256:13362cc5aa93c2beaf489c9c9017c793722aeb56d3e5166dadd5ef82da021fe1",
+                "sha256:19ca459cd2e66c0e2cc9a09d589f71d827f26d47fe4a9d09175f6aa0256b51c2",
+                "sha256:326f42ab4cfff56e77e3e595aeaf6c216712bbdd91e464d167c6434b28d65990",
+                "sha256:421f6cd86e84bbb696d54563c48014b12a23ef95a14e0bdba526be756d89f116",
+                "sha256:48d8b1659284f3c17b68587af047d110d8c44837736b8932c034091683e05863",
+                "sha256:4ecd404b2c6eceaca52f8b2e3e91b2187850a1ad3f8b746d0796a98b4cea04db",
+                "sha256:50768c6b7c3f0b38b7fb14dd4104da93ebced5f1a50dc0e834594bff6fbe1271",
+                "sha256:56d7a9c6e1a6835f521788f53b5af7912090674bb84ef5611663ee1595860fc7",
+                "sha256:73e819c6bed89f44ff1d690498c0a811948f73777e5f97c494c152b850fad478",
+                "sha256:742eb905ce2187133a29365b428e6c3b9001d79accdc30aa8969afba1d8470f4",
+                "sha256:9d968c677ac4d5cbdaa62fd3014ab241718e619d8e36ef8e11fb930515a1e918",
+                "sha256:9dd98384da775afa009bc04863426cb30596fd78c6f8e4e2e5bbf4edf8029504",
+                "sha256:a55db448124d1c1484df22fa8bbcbc45c64da5e6eae74ab095b9ea62e6d00496"
+            ],
+            "index": "pypi",
+            "version": "==305"
+        },
+        "winregistry": {
+            "hashes": [
+                "sha256:6d647a54eca832417b2d6e9fb017e21a8d089bc69687130ae1405ef635357901"
+            ],
+            "index": "pypi",
+            "version": "==0.8.3"
+        }
+    },
+    "develop": {}
+}
