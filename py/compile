@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ "$1" == "install" ] ; then
+    pipenv.exe run python.exe -m pip install https://github.com/pyinstaller/pyinstaller/tarball/develop
+else
+    pipenv.exe run pyinstaller.exe --noconfirm --onedir --window --icon i.ico shr.py
+    rm shr.spec
+fi
