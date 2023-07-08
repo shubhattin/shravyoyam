@@ -1,9 +1,0 @@
-node_modules
-/out
-/.next
-/py
-/public
-.env
-.env.*
-
-pnpm-lock.yaml
