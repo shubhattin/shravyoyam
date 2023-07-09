@@ -7,5 +7,7 @@ export const lasan = writable(false);
 export const lasanSanchit = writable<[string, [string, string, number]]>(['', ['', '', 0]]);
 export const media_show = writable(false);
 export const dattAMsh = writable<datt_type>({});
-export const currentTime = writable<number>(null!);
+export const currentTime = writable<number>(0);
+export const fileName = writable('');
+
 export const LOC_ID = 'sthAnam';

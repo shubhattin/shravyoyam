@@ -1,4 +1,3 @@
 {
-  "python.formatting.provider": "black",
-  "liveServer.settings.NoBrowser": true
+  "python.formatting.provider": "black"
 }

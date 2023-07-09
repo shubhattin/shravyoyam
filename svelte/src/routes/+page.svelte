@@ -10,14 +10,15 @@
     dattAMsh,
     media_show,
     blinking,
+    fileName,
     currentTime
   } from '@store/index';
   import Blink from '@components/Blink.svelte';
+  import Player from '@components/Player.svelte';
 
   let prachalan = false;
   let chalan = false;
   let value = '';
-  let selectValue = '';
 
   let collect: number[] = [];
   let key_num = 0;
@@ -31,11 +32,11 @@
       else if (jn == '21') {
         chalan = false; //active state of app
         prachalan = false; //active state of input field
-        lasan.set(false); // state of current playback
+        $lasan = false; // state of current playback
       }
       if (jn.length === 2) {
         collect = [];
-        blinking.set(true);
+        $blinking = true;
       }
     } else {
       if (jn === '22112') {
@@ -44,10 +45,12 @@
           body.style.backgroundColor = '';
           chalan = true;
         }, 500);
-      } else if (jn == '22212') nirdharanam.set(true);
+      } else if (jn == '22212') {
+        $nirdharanam = true; // nirdharanam page
+      }
       if (collect.length === 5) {
         collect = [];
-        blinking.set(true);
+        $blinking = true;
       }
     }
   };
@@ -56,18 +59,20 @@
       key_num++;
       setTimeout(() => {
         if (key_num == 0) return;
-        else if (key_num == 1) value = '';
+        else if (key_num == 1) {
+          set_media_file(value); // this will set if any available else set it zero
+        }
         key_num--;
       }, 3000);
     } else value = '';
   };
   const set_media_file = (val: string) => {
     if (val != '' && val in $dattAMsh) {
-      lasan.set(true);
-      lasanSanchit.set([val, $dattAMsh[val]]);
-      selectValue = val;
+      $lasan = true;
+      $fileName = val;
+      $lasanSanchit = [val, $dattAMsh[val]];
       prachalan = false;
-      media_show.set(false);
+      $media_show = false;
     }
     value = '';
     if (val !== '') collect = [];
@@ -89,7 +94,7 @@
 <div
   bind:this={body}
   class={clsx(
-    'p-2 w-full h-full select-none fixed top-0 transition',
+    'p-2 w-screen h-screen select-none transition',
     JSON.stringify($dattAMsh) !== '{}' ? 'bg-black' : 'bg-neutral-900'
   )}
 >
@@ -104,7 +109,7 @@
       />
     </form>
     <select
-      bind:value={selectValue}
+      bind:value={$fileName}
       on:change={(e) => set_media_file(e.currentTarget.value)}
       class="w-5 h-4 mt-2 text-white bg-black outline-none border-2 rounded-sm border-gray-900"
     >
@@ -137,16 +142,7 @@
       {#await import('@components/TimeControl.svelte') then TimeControl}
         <TimeControl.default />
       {/await}
-      {#if $lasan && $lasanSanchit[1][0] !== ''}
-        {@const dt = $lasanSanchit[1]}
-        {@const lc = `${localStorage.getItem(LOC_ID)}/${dt[0]}`}
-        {#if dt[2] === 0}
-          <audio bind:currentTime={$currentTime} controls loop autoPlay src={lc} />
-        {:else if dt[2] === 1}
-          <!-- svelte-ignore a11y-media-has-caption -->
-          <video bind:currentTime={$currentTime} controls loop autoPlay src={lc} />;
-        {/if}
-      {/if}
+      <Player />
     </div>
   {/if}
   <Blink />

@@ -10,4 +10,4 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 /build_apk
-/public/test_files
+/static/test_files

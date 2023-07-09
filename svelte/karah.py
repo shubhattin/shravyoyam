@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import shubhlipi as sh
 import os
 import dotenv
@@ -62,7 +64,8 @@ for x in sh.argv:
         if os.path.isfile(f"{pth}.idsig"):
             sh.delete_file(f"{pth}.idsig")
     elif x == "test":
-        adb = f"{sh.tool}/android/adb.exe" if sh.IS_WINDOWS else "adb"
+        adb = f"{sh.tool}/android/adb.exe"
+        print(adb)
         sh.cmd(f"{adb} install build_apk/shravyoyam.apk")
         sh.cmd(
             f"{adb} shell pm grant lasa.shravya android.permission.READ_EXTERNAL_STORAGE"
@@ -73,7 +76,7 @@ for x in sh.argv:
         )
     elif x == "upload_apk":
         sh.upload_release_file(
-            "build_apk/shravyoyam.apk",
+            "./build_apk/shravyoyam.apk",
             "shubhattin/shravyoyam",
             "bin",
             get_git_key(),
