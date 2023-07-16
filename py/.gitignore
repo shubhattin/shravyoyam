@@ -1,7 +1,7 @@
 /.venv
-/build
-/dist
-shr.spec
+/src/build
+/src/dist
+/src/main.spec
 /src/config.toml
 **__pycache__
 a.py

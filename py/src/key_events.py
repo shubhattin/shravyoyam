@@ -4,10 +4,10 @@ from time import time
 import keyboard as kb
 from just_playback import Playback
 
-from app_state import (ALL_KEYS_TO_LISTEN, audio_playback_ref, blinker,
-                       blinker_root, chalitah, dattAMsh, fileID, fileInfo,
-                       listening_keys, load_data, recorded_keys,
-                       time_start_listen_key, video_player_process_ref)
+from app_state import (blinker, chalitah, dattAMsh, fileID, listening_keys,
+                       load_data, media_refs, recorded_keys,
+                       time_start_listen_key)
+from kry import clear_all_media, close_app, pause, resume, stop_media_playback
 
 if True:
     # Blink notification for On and Off
@@ -20,20 +20,15 @@ if True:
     listening_keys.add_callback(show_blue)
 
     dattAMsh.set(load_data.get_dattAMsh())
-    # Calculating All Keys to listen
-    r = ""
-    for x in dattAMsh.get():
-        r += x
-    ALL_KEYS_TO_LISTEN = "".join(list(set(r)))
+
+    def on_vichalitah(active: bool):
+        if not active:
+            clear_all_media()
+    chalitah.add_callback(on_vichalitah)
 
 
 def start_keyboard_event_listeners():
-    # Closing App
-    def close_app():
-        blinker.blink("red")
-        clear_all_media()
 
-        blinker_root.after(500, blinker_root.destroy)
     kb.add_hotkey("windows+esc+control", close_app)
 
     # Testing if Keyboard listeners are still working
@@ -43,18 +38,20 @@ def start_keyboard_event_listeners():
     kb.add_hotkey("windows+f12", lambda: chalitah.set(True))
     kb.add_hotkey("windows+f11", lambda: chalitah.set(False))
 
-    # Stop Playback
-    def stop_media_playback():
-        clear_all_media()
-        blinker.blink("purple", 700)
     kb.add_hotkey("windows+shift", stop_media_playback)
 
     # ALL_KEYS_TO_LISTEN
+
     def listen_keys_for_playing(name: str):
         if not listening_keys.get():
             return
         global recorded_keys
         recorded_keys += name.lower()
+    # Calculating All Keys to listen
+    all_keys_to_listen = ""
+    for x in dattAMsh.get():
+        all_keys_to_listen += x
+    ALL_KEYS_TO_LISTEN = "".join(list(set(all_keys_to_listen)))
     for key in ALL_KEYS_TO_LISTEN:
         kb.on_press_key(
             key, lambda info: listen_keys_for_playing(str(info.name)))
@@ -68,7 +65,6 @@ def start_keyboard_event_listeners():
         else:
             data = dattAMsh.get()
             if recorded_keys in data:
-                fileInfo.set(data[recorded_keys])
                 fileID.set(recorded_keys)
         listening_keys.set(False)
     kb.on_press_key("shift", play_key_pressed)
@@ -91,48 +87,22 @@ def start_keyboard_event_listeners():
     kb.add_hotkey("ctrl+up+down", resume)
 
 
-def clear_all_media():
-    global audio_playback_ref, video_player_process_ref
-    if audio_playback_ref:  # For audio
-        audio_playback_ref.stop()
-        audio_playback_ref = None
-    elif video_player_process_ref:  # For video
-        video_player_process_ref.kill()
-        video_player_process_ref = None
-
-
-def pause():
-    global audio_playback_ref
-    if not audio_playback_ref:
+def set_media_file(val: str):
+    if val == "":
         return
-    audio_playback_ref.pause()
-    blinker.blink("orange")
-
-
-def resume():
-    global audio_playback_ref
-    if not audio_playback_ref:
-        return
-    audio_playback_ref.resume()
-    blinker.blink("blue")
-
-
-def set_media_file(_):
     # Set new file whenver fileID changes
-    clear_all_media()
-    fl_info = fileInfo.get()
+    clear_all_media(clear_file_id=False)
+    fl_info = dattAMsh.get()[val]
 
     fldr_loc = load_data.CONFIG_DATA.folder_loc
     loc = f'{fldr_loc}/{fl_info[0]}'
     if fl_info[2] == 0:  # Music File
-        global audio_playback_ref
-        audio_playback_ref = Playback(loc)
-        audio_playback_ref.play()
-        audio_playback_ref.loop_at_end(True)
+        media_refs.audio = Playback(loc)
+        media_refs.audio.play()
+        media_refs.audio.loop_at_end(True)
     elif fl_info[2] == 1:  # Video File
-        global video_player_process_ref
         command = f'"{load_data.CONFIG_DATA.vlc_loc}" "{loc}"'
-        video_player_process_ref = Popen(command)
+        media_refs.video = Popen(command)
 
     blinker.blink("brown", 1000)
 

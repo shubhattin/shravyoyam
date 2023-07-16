@@ -8,6 +8,8 @@ keyboard = "*"
 just-playback = "*"
 pydantic = "*"
 toml = "*"
+pystray = "*"
+pillow = "*"
 
 [dev-packages]
 
