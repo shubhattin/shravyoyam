@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pipenv.exe run python.exe main.py

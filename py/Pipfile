@@ -4,11 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-winregistry = "==0.8.3"
 keyboard = "*"
-audioplayer = "*"
-psutil = "*"
-pywin32 = "*"
+just-playback = "*"
+pydantic = "*"
+toml = "*"
 
 [dev-packages]
 

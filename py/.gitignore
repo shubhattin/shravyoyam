@@ -2,3 +2,5 @@
 /build
 /dist
 shr.spec
+/src/config.toml
+**__pycache__
