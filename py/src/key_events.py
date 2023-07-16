@@ -1,17 +1,37 @@
+from subprocess import Popen
 from time import time
 
 import keyboard as kb
+from just_playback import Playback
 
-from app_state import (ALL_KEYS_TO_LISTEN, CONFIG_DATA, Playback,
-                       audio_playback_ref, blinker, blinker_root, chalitah,
-                       dattAMsh, fileID, fileInfo, listening_keys,
-                       recorded_keys, time_start_listen_key)
+from app_state import (ALL_KEYS_TO_LISTEN, audio_playback_ref, blinker,
+                       blinker_root, chalitah, dattAMsh, fileID, fileInfo,
+                       listening_keys, load_data, recorded_keys,
+                       time_start_listen_key, video_player_process_ref)
+
+if True:
+    # Blink notification for On and Off
+    chalitah.add_callback(lambda vl: blinker.blink("green" if vl else "black"))
+
+    # Blink
+    def show_blue(vl):
+        if vl:
+            blinker.blink("blue")
+    listening_keys.add_callback(show_blue)
+
+    dattAMsh.set(load_data.get_dattAMsh())
+    # Calculating All Keys to listen
+    r = ""
+    for x in dattAMsh.get():
+        r += x
+    ALL_KEYS_TO_LISTEN = "".join(list(set(r)))
 
 
 def start_keyboard_event_listeners():
     # Closing App
     def close_app():
         blinker.blink("red")
+        clear_all_media()
 
         blinker_root.after(500, blinker_root.destroy)
     kb.add_hotkey("windows+esc+control", close_app)
@@ -72,10 +92,13 @@ def start_keyboard_event_listeners():
 
 
 def clear_all_media():
-    global audio_playback_ref
+    global audio_playback_ref, video_player_process_ref
     if audio_playback_ref:  # For audio
         audio_playback_ref.stop()
         audio_playback_ref = None
+    elif video_player_process_ref:  # For video
+        video_player_process_ref.kill()
+        video_player_process_ref = None
 
 
 def pause():
@@ -99,13 +122,17 @@ def set_media_file(_):
     clear_all_media()
     fl_info = fileInfo.get()
 
+    fldr_loc = load_data.CONFIG_DATA.folder_loc
+    loc = f'{fldr_loc}/{fl_info[0]}'
     if fl_info[2] == 0:  # Music File
         global audio_playback_ref
-        fldr_loc = CONFIG_DATA.folder_loc.replace("/", "\\")
-        loc = f'{fldr_loc}\\'+fl_info[0].replace("/", "\\")
         audio_playback_ref = Playback(loc)
         audio_playback_ref.play()
         audio_playback_ref.loop_at_end(True)
+    elif fl_info[2] == 1:  # Video File
+        global video_player_process_ref
+        command = f'"{load_data.CONFIG_DATA.vlc_loc}" "{loc}"'
+        video_player_process_ref = Popen(command)
 
     blinker.blink("brown", 1000)
 

@@ -1,9 +1,9 @@
 from tkinter import Tk
-from typing import Dict, Tuple
+from subprocess import Popen
 
 from Blinker import Blinker
 from State import State
-from load_data import get_dattAMsh, dattAMshType, CONFIG_DATA
+import load_data
 from just_playback import Playback
 
 "App's State"
@@ -11,9 +11,9 @@ chalitah = State(False)
 """App's On/Off State"""
 
 fileID = State("")
-fileInfo = State[Tuple[str, str, int]](("", "", 0))
+fileInfo = State[tuple[str, str, int]](("", "", 0))
 
-dattAMsh = State[dattAMshType]({})
+dattAMsh = State[load_data.dattAMshType]({})
 """All the file related data"""
 
 listening_keys = State(False)
@@ -24,26 +24,6 @@ blinker_root = Tk()
 blinker = Blinker(blinker_root)
 ALL_KEYS_TO_LISTEN = ""
 audio_playback_ref: Playback | None = None
+video_player_process_ref: Popen | None = None
 time_start_listen_key: float = 0
 recorded_keys: str = ""
-
-def add_events():
-    # Blink notification for On and Off
-    chalitah.add_callback(lambda vl: blinker.blink("green" if vl else "black"))
-
-    # Blink
-    def show_blue(vl):
-        if vl:
-            blinker.blink("blue")
-    listening_keys.add_callback(show_blue)
-
-
-add_events()
-
-dattAMsh.set(get_dattAMsh())
-# Calculating All Keys to listen
-if True:
-    r = ""
-    for x in dattAMsh.get():
-        r += x
-    ALL_KEYS_TO_LISTEN = "".join(list(set(r)))

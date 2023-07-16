@@ -4,3 +4,4 @@
 shr.spec
 /src/config.toml
 **__pycache__
+a.py

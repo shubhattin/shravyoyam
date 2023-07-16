@@ -37,5 +37,5 @@ def get_dattAMsh() -> dattAMshType:
                             mode="r", encoding="utf-8").read()
     db_file_str = db_file_str[db_file_str.index(
         "{"): db_file_str.index("}") + 1]
-    db_file_data: dict = eval(db_file_str)
+    db_file_data = dattAMshType(eval(db_file_str))
     return db_file_data
