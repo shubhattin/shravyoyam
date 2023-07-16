@@ -86,6 +86,15 @@ def start_keyboard_event_listeners():
 
     kb.add_hotkey("ctrl+up+down", resume)
 
+    def play_pause():
+        if media_refs.audio:
+            if media_refs.audio.playing:
+                media_refs.audio.pause()
+            elif media_refs.audio.paused:
+                media_refs.audio.resume()
+    kb.add_hotkey("play/pause", play_pause)
+    kb.add_hotkey("play/pause media", play_pause)
+
 
 def set_media_file(val: str):
     if val == "":
