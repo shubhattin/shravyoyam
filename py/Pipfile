@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 keyboard = "*"
 just-playback = "*"
-pydantic = "*"
 toml = "*"
 pystray = "*"
 pillow = "*"
