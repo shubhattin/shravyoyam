@@ -9,23 +9,6 @@ from app_state import (blinker, chalitah, dattAMsh, fileID, listening_keys,
                        time_start_listen_key)
 from kry import clear_all_media, close_app, pause, resume, stop_media_playback
 
-if True:
-    # Blink notification for On and Off
-    chalitah.add_callback(lambda vl: blinker.blink("green" if vl else "black"))
-
-    # Blink
-    def show_blue(vl):
-        if vl:
-            blinker.blink("blue")
-    listening_keys.add_callback(show_blue)
-
-    dattAMsh.set(load_data.get_dattAMsh())
-
-    def on_vichalitah(active: bool):
-        if not active:
-            clear_all_media()
-    chalitah.add_callback(on_vichalitah)
-
 
 def start_keyboard_event_listeners():
 
@@ -75,12 +58,6 @@ def start_keyboard_event_listeners():
         listening_keys.set(True)
     kb.add_hotkey("windows+f10", set_listening_keys_status)
 
-    def record_start_time():
-        global time_start_listen_key, recorded_keys
-        time_start_listen_key = time()
-        recorded_keys = ""
-    listening_keys.add_callback(lambda _: record_start_time())
-
     # Pause/Resume
     kb.add_hotkey("left+right", pause)
 
@@ -93,27 +70,48 @@ def start_keyboard_event_listeners():
             elif media_refs.audio.paused:
                 media_refs.audio.resume()
     kb.add_hotkey("play/pause", play_pause)
-    kb.add_hotkey("play/pause media", play_pause)
 
 
-def set_media_file(val: str):
-    if val == "":
-        return
-    # Set new file whenver fileID changes
-    clear_all_media(clear_file_id=False)
-    fl_info = dattAMsh.get()[val]
+def register_state_change_callbacks():
+    # Blink notification for On and Off
+    chalitah.add_callback(lambda vl: blinker.blink("green" if vl else "black"))
 
-    fldr_loc = load_data.CONFIG_DATA.folder_loc
-    loc = f'{fldr_loc}/{fl_info[0]}'
-    if fl_info[2] == 0:  # Music File
-        media_refs.audio = Playback(loc)
-        media_refs.audio.play()
-        media_refs.audio.loop_at_end(True)
-    elif fl_info[2] == 1:  # Video File
-        command = f'"{load_data.CONFIG_DATA.vlc_loc}" "{loc}"'
-        media_refs.video = Popen(command)
+    # Blink
+    def show_blue(vl):
+        if vl:
+            blinker.blink("blue")
+    listening_keys.add_callback(show_blue)
 
-    blinker.blink("brown", 1000)
+    dattAMsh.set(load_data.get_dattAMsh())
 
+    def on_vichalitah(active: bool):
+        if not active:
+            clear_all_media()
+    chalitah.add_callback(on_vichalitah)
 
-fileID.add_callback(set_media_file)
+    def record_start_time():
+        global time_start_listen_key, recorded_keys
+        time_start_listen_key = time()
+        recorded_keys = ""
+    listening_keys.add_callback(lambda _: record_start_time())
+
+    def set_media_file(val: str):
+        if val == "":
+            return
+        # Set new file whenver fileID changes
+        clear_all_media(clear_file_id=False)
+        fl_info = dattAMsh.get()[val]
+
+        fldr_loc = load_data.CONFIG_DATA.folder_loc
+        loc = f'{fldr_loc}/{fl_info[0]}'
+        if fl_info[2] == 0:  # Music File
+            media_refs.audio = Playback(loc)
+            media_refs.audio.play()
+            media_refs.audio.loop_at_end(True)
+        elif fl_info[2] == 1:  # Video File
+            command = f'"{load_data.CONFIG_DATA.vlc_loc}" "{loc}"'
+            media_refs.video = Popen(command)
+
+        blinker.blink("brown", 1000)
+
+    fileID.add_callback(set_media_file)
